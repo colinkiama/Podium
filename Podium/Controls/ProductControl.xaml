@@ -22,7 +22,9 @@
                    HorizontalAlignment="Center"
                    Style="{StaticResource RankingTextStyle}"/>
         <Border CornerRadius="4" Tapped="Border_Tapped"
-                Margin="0,2,0,0">
+                Margin="0,2,0,0"
+                Width="100"
+                Height="100">
             <FlyoutBase.AttachedFlyout>
                 <Flyout>
                     <Grid Width="200"
@@ -62,6 +64,8 @@
                   FontSize="14"
                    HorizontalAlignment="Center"
                   TextTrimming="CharacterEllipsis"
+                   TextWrapping="WrapWholeWords"
+                   TextAlignment="Center"
                    Margin="0,4,0,0"/>
     </StackPanel>
 </UserControl>

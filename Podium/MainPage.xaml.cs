@@ -86,5 +86,15 @@ namespace Podium
                 await ShowTopPostsAsync();
             }
         }
+
+        private void NotificationsToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void NotificationsToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
