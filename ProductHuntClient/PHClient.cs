@@ -27,15 +27,18 @@ namespace ProductHuntClient
         const string AccessTokenString = "access_token";
 
         HttpClient _client = new HttpClient();
+        static ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
 
         string _clientID;
         string _clientSecret;
 
+        public bool TokenExists { get; set; }
+
         public PHClient(string clientID, string clientSecret)
         {
             _clientID = clientID;
-            _clientSecret = clientSecret;
+            _clientSecret = clientSecret;            
             SetDefaults();
         }
 
@@ -43,6 +46,10 @@ namespace ProductHuntClient
         {
             _client.DefaultRequestHeaders.Accept.Add(HttpMediaTypeWithQualityHeaderValue.Parse("application/json"));
             _client.DefaultRequestHeaders.Host = new Windows.Networking.HostName("api.producthunt.com");
+
+            if (TokenExists = CheckIfTokenExists()){
+                LoadToken();
+            }
         }
 
         public void SetTokenAsAuthField(string token)
@@ -83,8 +90,7 @@ namespace ProductHuntClient
 
         private void SaveTokenInLocalSettings(string accessToken)
         {
-            var localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values[AccessTokenString] = accessToken;
+            _localSettings.Values[AccessTokenString] = accessToken;
             Debug.WriteLine($"Access Token saved as: {accessToken}");
         }
 
@@ -168,6 +174,17 @@ namespace ProductHuntClient
                 postsResponse = response.Content.ToString();
             }
             return postsResponse;
+        }
+
+        private void LoadToken()
+        {
+            string token = (string)_localSettings.Values[AccessTokenString];
+            SetTokenAsAuthField(token);
+        }
+
+        public static bool CheckIfTokenExists()
+        {
+            return _localSettings.Values[AccessTokenString] != null;
         }
     }
 }
