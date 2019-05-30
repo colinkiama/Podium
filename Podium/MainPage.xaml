@@ -8,18 +8,32 @@
     xmlns:controls="using:Podium.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+   
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center"
+
+
+        <ScrollViewer Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <controls:ProductControl x:Name="Product1" Width="100" />
-            <controls:ProductControl x:Name="Product2" Width="100"/>
-            <controls:ProductControl x:Name="Product3" Width="100"/>
-        </StackPanel>
+                <controls:ProductControl x:Name="Product2" Width="140"
+                                     Margin="0,100,40,0"/>
+                <controls:ProductControl x:Name="Product1" Width="140"
+                                     Margin="0,-80,0,0"/>
+                <controls:ProductControl x:Name="Product3" Width="140"
+                                      Margin="40,100,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Grid.Row="1"
+                Content="Turn on notifications"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,40"/>
     </Grid>
+    
 </Page>

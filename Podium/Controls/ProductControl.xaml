@@ -21,7 +21,8 @@
         <TextBlock Name="RankingTextBlock" Text="{x:Bind CurrentProduct.Ranking, Converter={StaticResource RankConverter}}"
                    HorizontalAlignment="Center"
                    Style="{StaticResource RankingTextStyle}"/>
-        <Border CornerRadius="4" Tapped="Border_Tapped">
+        <Border CornerRadius="4" Tapped="Border_Tapped"
+                Margin="0,2,0,0">
             <FlyoutBase.AttachedFlyout>
                 <Flyout>
                     <Grid Width="200"
@@ -51,13 +52,16 @@
                 </Flyout>
             </FlyoutBase.AttachedFlyout>
             
-            <Image Name="ProductImage">
+            <Image Name="ProductImage" Width="100" Height="100">
                 <Image.Source>
                     <BitmapImage DecodePixelWidth="200" DecodePixelHeight="200" UriSource="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
                 </Image.Source>
             </Image>
         </Border>
         <TextBlock Name="ProductNameTextBlock" Text="{x:Bind CurrentProduct.Post.Name}"
-                   Style="{StaticResource RankingTextStyle}"/>
+                  FontSize="14"
+                   HorizontalAlignment="Center"
+                  TextTrimming="CharacterEllipsis"
+                   Margin="0,4,0,0"/>
     </StackPanel>
 </UserControl>
