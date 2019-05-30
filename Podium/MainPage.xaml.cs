@@ -41,5 +41,11 @@ namespace Podium
         {
             var topPosts = _client.GetTopPostsAsync();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            AuthorizeButton.Visibility = _client.TokenExists ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }
