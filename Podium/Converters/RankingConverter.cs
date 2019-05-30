@@ -20,10 +20,10 @@ namespace Podium.Converters
                         valueToReturn = "1st 🥇";
                         break;
                     case 2:
-                        value = "2nd 🥈";
+                        valueToReturn = "2nd 🥈";
                         break;
                     case 3:
-                        value = "3rd 🥉";
+                        valueToReturn = "3rd 🥉";
                         break;
                 }
 
