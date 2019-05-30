@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -85,16 +86,44 @@ namespace Podium
             {
                 await ShowTopPostsAsync();
             }
+
+            NotificationsToggleButton.IsChecked = CheckIfNotificationsRegistered() ? true : false;
+        }
+
+        private bool CheckIfNotificationsRegistered()
+        {
+            return BackgroundTaskRegistration.AllTasks.Values.Where(p => p.Name == "PodiumNotifications").Count() > 1;
         }
 
         private void NotificationsToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            
+            RegisterNotifications();
+        }
+
+        private void RegisterNotifications()
+        {
+
+            var builder = new BackgroundTaskBuilder();
+
+            builder.Name = "PodiumNotifications";
+            builder.TaskEntryPoint = "PodiumNotifications.ToastNotifier";
+            builder.SetTrigger(new TimeTrigger(60, false));
+            builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
+            builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+            BackgroundTaskRegistration bgTask = builder.Register();
         }
 
         private void NotificationsToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
+            UnregisterNotifications();
+        }
 
+        private void UnregisterNotifications()
+        {
+            foreach (var task in BackgroundTaskRegistration.AllTasks)
+            {
+                task.Value.Unregister(true);
+            }
         }
     }
 }

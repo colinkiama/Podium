@@ -33,13 +33,13 @@ namespace PodiumNotifications
 
             for (int i = posts.Count-1; i > -1; i--)
             {
-                SendToastWithHeader(posts[i], rnd, currentTime, i);
+                SendToastWithHeader(posts[i], rnd, currentTime, i+1);
             }
 
             
         }
 
-        private void SendToastWithHeader(PHPost post, int rnd, DateTimeOffset currentTime, int currentIndex)
+        private void SendToastWithHeader(PHPost post, int rnd, DateTimeOffset currentTime, int rank)
         {
             var toastContent = new ToastContent()
             {
@@ -52,7 +52,7 @@ namespace PodiumNotifications
             {
                 new AdaptiveText()
                 {
-                    Text = $"{PickRankBasedOnIndex(currentIndex)} - {post.Name}"
+                    Text = $"{PickRankBasedOnIndex(rank)} - {post.Name}"
                 },
                 new AdaptiveText()
                 {
@@ -76,11 +76,11 @@ namespace PodiumNotifications
             ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
         }
 
-        private string PickRankBasedOnIndex(int currentIndex)
+        private string PickRankBasedOnIndex(int rank)
         {
             string rankToReturn = "unranked";
 
-            switch (currentIndex)
+            switch (rank)
             {
                 case 1:
                     rankToReturn = "1st 🥇";
