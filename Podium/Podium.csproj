@@ -154,9 +154,7 @@
       <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ProductHuntClient\ProductHuntClient.csproj">
       <Project>{a09190da-5a86-404d-a3c0-2107d28f19f5}</Project>

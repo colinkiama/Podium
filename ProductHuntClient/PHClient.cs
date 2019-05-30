@@ -36,6 +36,18 @@ namespace ProductHuntClient
         {
             _clientID = clientID;
             _clientSecret = clientSecret;
+            SetDefaults();
+        }
+
+        private void SetDefaults()
+        {
+            _client.DefaultRequestHeaders.Accept.Add(HttpMediaTypeWithQualityHeaderValue.Parse("application/json"));
+            _client.DefaultRequestHeaders.Host = new Windows.Networking.HostName("api.producthunt.com");
+        }
+
+        public void SetTokenAsAuthField(string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = HttpCredentialsHeaderValue.Parse($"Bearer {token}");
         }
 
         public IAsyncOperation<bool> AuthorizeAsync()
@@ -46,12 +58,11 @@ namespace ProductHuntClient
         private async Task<bool> AuthorizeAsyncTask()
         {
             bool wasAuthorized = false;
-            _client.DefaultRequestHeaders.Accept.Add(HttpMediaTypeWithQualityHeaderValue.Parse("application/json"));
-            _client.DefaultRequestHeaders.Host = new Windows.Networking.HostName("api.producthunt.com");
+           
 
             var authorizationContent = CreateAuthContent();
 
-            var response = await _client.PostAsync(new Uri("https://" +_client.DefaultRequestHeaders.Host + TokenRoute), authorizationContent);
+            var response = await _client.PostAsync(new Uri("https://" + _client.DefaultRequestHeaders.Host + TokenRoute), authorizationContent);
 
             if (response.IsSuccessStatusCode)
             {
@@ -67,6 +78,7 @@ namespace ProductHuntClient
             JObject tokenJson = JObject.Parse(authResponseBody);
             string accessToken = tokenJson.Value<string>(AccessTokenString);
             SaveTokenInLocalSettings(accessToken);
+            SetTokenAsAuthField(accessToken);
         }
 
         private void SaveTokenInLocalSettings(string accessToken)
@@ -82,10 +94,74 @@ namespace ProductHuntClient
             authJson.Add(ClientIDString, JToken.FromObject(_clientID));
             authJson.Add(ClientSecretString, JToken.FromObject(_clientSecret));
             authJson.Add(GrantTypeString, JToken.FromObject(GrantType));
-            
+
             return new HttpStringContent(authJson.ToString(), Windows.Storage.Streams.UnicodeEncoding.Utf8, ContentType);
         }
 
 
+        public IAsyncOperation<IList<PHPost>> GetTopPostsAsync()
+        {
+            return GetTopPostsAsyncTask().AsAsyncOperation();
+        }
+
+        private async Task<IList<PHPost>> GetTopPostsAsyncTask()
+        {
+            List<PHPost> topPosts = new List<PHPost>();
+            string query =
+               @"query {
+  posts(first: 3) {
+    edges {
+      node {
+        name
+        description
+        website
+        thumbnail {
+          url(width: 50, height: 50)
+        }
+      }
+    }
+  }
+}";
+            JObject queryObject = new JObject();
+
+            queryObject.Add("query", JToken.FromObject(query));
+           
+
+            var response = await QueryForPosts(queryObject.ToString());
+            Debug.WriteLine(response);
+            IList<PHPost> parsedPosts = ParseResponseForPosts(response);
+            Debug.WriteLine($"Top posts: {parsedPosts}");
+            return topPosts;
+        }
+
+        private IList<PHPost> ParseResponseForPosts(string response)
+        {
+            JObject obj = JObject.Parse(response);
+            JArray edges = (JArray)obj["data"]["posts"]["edges"];
+
+            List<PHPost> postsToReturn = new List<PHPost>();
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                postsToReturn.Add(JsonConvert.DeserializeObject<PHPost>(edges[i].ToString()));
+            }
+
+            return postsToReturn;
+
+        }
+
+        private async Task<string> QueryForPosts(string query)
+        {
+            string postsResponse = "";
+
+           var response = await _client.PostAsync(new Uri("https://" + _client.DefaultRequestHeaders.Host + GraphQLRoute), 
+               new HttpStringContent(query, Windows.Storage.Streams.UnicodeEncoding.Utf8, ContentType));
+
+            if (response.IsSuccessStatusCode)
+            {
+                postsResponse = response.Content.ToString();
+            }
+            return postsResponse;
+        }
     }
 }

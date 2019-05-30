@@ -9,8 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <StackPanel>
         <Button Content="Authorize"
                 Name="AuthorizeButton"
                 Click="AuthorizeButton_Click"/>
+            <Button Content="Top Posts"
+                Name="TopPostsButton"
+                Click="TopPostsButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

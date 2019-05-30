@@ -24,6 +24,7 @@ namespace Podium
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        PHClient _client = new PHClient(Constants.ApiKey, Constants.ApiSecret);
         public MainPage()
         {
             this.InitializeComponent();
@@ -31,9 +32,14 @@ namespace Podium
 
         private async void AuthorizeButton_Click(object sender, RoutedEventArgs e)
         {
-            PHClient client = new PHClient(Constants.ApiKey, Constants.ApiSecret);
-            bool hasAuthorized = await client.AuthorizeAsync();
+            
+            bool hasAuthorized = await _client.AuthorizeAsync();
             Debug.WriteLine($"Authorization Successful: {hasAuthorized}");
+        }
+
+        private void TopPostsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var topPosts = _client.GetTopPostsAsync();
         }
     }
 }
