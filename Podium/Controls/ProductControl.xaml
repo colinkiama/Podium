@@ -24,23 +24,27 @@
         <Border CornerRadius="4" Tapped="Border_Tapped">
             <FlyoutBase.AttachedFlyout>
                 <Flyout>
-                    <Grid Width="200">
+                    <Grid Width="200"
+                          Margin="4,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
                             <TextBlock Text="{x:Bind CurrentProduct.Post.Name}"
-                                       Style="{StaticResource FlyoutTitleTextStyle}"/>
+                                       Style="{StaticResource FlyoutTitleTextStyle}"
+                                       Margin="0,8,0,0"/>
                             <TextBlock Text="{x:Bind CurrentProduct.Post.Description}"
                                        TextWrapping="WrapWholeWords"
-                                       Margin="0,4,0,0"/>
+                                       Margin="0,12,0,20"
+                                       FontSize="14"/>
                         </StackPanel>
                         <Button Grid.Row="1" HorizontalAlignment="Stretch"
-                                Content="Find out more"
+                                Content="Find out more!"
                                 Name="ViewProductButton"
                                 Click="ViewProductButton_Click"
-                                Margin="20,12">
+                                Padding="12,7"
+                                FontSize="14">
                             
                         </Button>
                     </Grid>
