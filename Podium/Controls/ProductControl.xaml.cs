@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,16 @@ namespace Podium.Controls
         {
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();
+        }
+
+        private async void ViewProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(CurrentProduct.Post.Website));
+        }
+
+        private void Border_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Flyout.ShowAttachedFlyout(sender as FrameworkElement);
         }
     }
 }

@@ -21,7 +21,32 @@
         <TextBlock Name="RankingTextBlock" Text="{x:Bind CurrentProduct.Ranking, Converter={StaticResource RankConverter}}"
                    HorizontalAlignment="Center"
                    Style="{StaticResource RankingTextStyle}"/>
-        <Border CornerRadius="4">
+        <Border CornerRadius="4" Tapped="Border_Tapped">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout>
+                    <Grid Width="200">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind CurrentProduct.Post.Name}"
+                                       Style="{StaticResource FlyoutTitleTextStyle}"/>
+                            <TextBlock Text="{x:Bind CurrentProduct.Post.Description}"
+                                       TextWrapping="WrapWholeWords"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Row="1" HorizontalAlignment="Stretch"
+                                Content="Find out more"
+                                Name="ViewProductButton"
+                                Click="ViewProductButton_Click"
+                                Margin="20,12">
+                            
+                        </Button>
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+            
             <Image Name="ProductImage">
                 <Image.Source>
                     <BitmapImage DecodePixelWidth="200" DecodePixelHeight="200" UriSource="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
