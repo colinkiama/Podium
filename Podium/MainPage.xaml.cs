@@ -1,6 +1,8 @@
-﻿using ProductHuntClient;
+﻿using Podium.Model;
+using ProductHuntClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,8 @@ namespace Podium
     public sealed partial class MainPage : Page
     {
         PHClient _client = new PHClient(Constants.ApiKey, Constants.ApiSecret);
+        public List<Product> products { get; set; } = new List<Product>();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -37,9 +41,24 @@ namespace Podium
             Debug.WriteLine($"Authorization Successful: {hasAuthorized}");
         }
 
-        private void TopPostsButton_Click(object sender, RoutedEventArgs e)
+        private async void TopPostsButton_Click(object sender, RoutedEventArgs e)
         {
-            var topPosts = _client.GetTopPostsAsync();
+            var topPosts = await _client.GetTopPostsAsync();
+            var topPostsList = (List<PHPost>)topPosts;
+            products.Clear();
+            for (int i = 0; i < topPosts.Count; i++)
+            {
+                products.Add(new Product(topPostsList[i], i + 1));
+            }
+
+            UpdateProductControls();
+        }
+
+        private void UpdateProductControls()
+        {
+            Product1.DataContext = products[0];
+            Product2.DataContext = products[1];
+            Product3.DataContext = products[2];
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

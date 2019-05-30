@@ -112,7 +112,6 @@ namespace ProductHuntClient
 
         private async Task<IList<PHPost>> GetTopPostsAsyncTask()
         {
-            List<PHPost> topPosts = new List<PHPost>();
             string query =
                @"query {
   posts(first: 3) {
@@ -137,7 +136,7 @@ namespace ProductHuntClient
             Debug.WriteLine(response);
             IList<PHPost> parsedPosts = ParseResponseForPosts(response);
             Debug.WriteLine($"Top posts: {parsedPosts}");
-            return topPosts;
+            return parsedPosts;
         }
 
         private IList<PHPost> ParseResponseForPosts(string response)
@@ -158,7 +157,7 @@ namespace ProductHuntClient
             {
                 Debug.WriteLine(postsToReturn[i].Name);
             }
-            return new List<PHPost>();
+            return postsToReturn;
 
         }
 

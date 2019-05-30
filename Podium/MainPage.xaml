@@ -5,6 +5,7 @@
     xmlns:local="using:Podium"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Podium.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -16,6 +17,13 @@
             <Button Content="Top Posts"
                 Name="TopPostsButton"
                 Click="TopPostsButton_Click"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <controls:ProductControl x:Name="Product1" Width="70" />
+            <controls:ProductControl x:Name="Product2" Width="70"/>
+            <controls:ProductControl x:Name="Product3" Width="70"/>
         </StackPanel>
     </Grid>
 </Page>
