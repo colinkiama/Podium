@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 namespace ProductHuntClient
 {
     [JsonObject]
+    public sealed class Node
+    {
+        [JsonProperty("node")]
+        public PHPost Post { get; set; }
+    }
+
+    [JsonObject]
     public sealed class PHPost
     {
         [JsonProperty("name")]

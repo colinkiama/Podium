@@ -143,10 +143,16 @@ namespace ProductHuntClient
 
             for (int i = 0; i < edges.Count; i++)
             {
-                postsToReturn.Add(JsonConvert.DeserializeObject<PHPost>(edges[i].ToString()));
+                Debug.WriteLine($"Edge {i}: {edges[i].ToString()}");
+                var node = JsonConvert.DeserializeObject<Node>(edges[i].ToString());
+                postsToReturn.Add(node.Post);
             }
 
-            return postsToReturn;
+            for (int i = 0; i < postsToReturn.Count; i++)
+            {
+                Debug.WriteLine(postsToReturn[i].Name);
+            }
+            return new List<PHPost>();
 
         }
 
