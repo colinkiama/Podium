@@ -121,7 +121,7 @@ namespace ProductHuntClient
         description
         website
         thumbnail {
-          url(width: 50, height: 50)
+          url(width: 200, height: 200)
         }
       }
     }

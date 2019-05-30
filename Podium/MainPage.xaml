@@ -21,9 +21,9 @@
 
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <controls:ProductControl x:Name="Product1" Width="70" />
-            <controls:ProductControl x:Name="Product2" Width="70"/>
-            <controls:ProductControl x:Name="Product3" Width="70"/>
+            <controls:ProductControl x:Name="Product1" Width="100" />
+            <controls:ProductControl x:Name="Product2" Width="100"/>
+            <controls:ProductControl x:Name="Product3" Width="100"/>
         </StackPanel>
     </Grid>
 </Page>

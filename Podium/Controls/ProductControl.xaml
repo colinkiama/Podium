@@ -7,11 +7,26 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
-
+    d:DesignWidth="400"
+    xmlns:conv="using:Podium.Converters">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Dictionaries/ProductStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:RankingConverter x:Key="RankConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
-        <TextBlock Name="RankingTextBlock" Text="{x:Bind CurrentProduct.Ranking}"/>
-        <Image Name="ProductImage" Source="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
-        <TextBlock Name="ProductNameTextBlock" Text="{x:Bind CurrentProduct.Post.Name}"/>
+        <TextBlock Name="RankingTextBlock" Text="{x:Bind CurrentProduct.Ranking, Converter={StaticResource RankConverter}}"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource RankingTextStyle}"/>
+        <Image Name="ProductImage">
+            <Image.Source>
+                <BitmapImage DecodePixelWidth="200" DecodePixelHeight="200" UriSource="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
+            </Image.Source>
+        </Image>
+        <TextBlock Name="ProductNameTextBlock" Text="{x:Bind CurrentProduct.Post.Name}"
+                   Style="{StaticResource RankingTextStyle}"/>
     </StackPanel>
 </UserControl>
