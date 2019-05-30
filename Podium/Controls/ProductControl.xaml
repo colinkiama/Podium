@@ -21,11 +21,13 @@
         <TextBlock Name="RankingTextBlock" Text="{x:Bind CurrentProduct.Ranking, Converter={StaticResource RankConverter}}"
                    HorizontalAlignment="Center"
                    Style="{StaticResource RankingTextStyle}"/>
-        <Image Name="ProductImage">
-            <Image.Source>
-                <BitmapImage DecodePixelWidth="200" DecodePixelHeight="200" UriSource="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
-            </Image.Source>
-        </Image>
+        <Border CornerRadius="4">
+            <Image Name="ProductImage">
+                <Image.Source>
+                    <BitmapImage DecodePixelWidth="200" DecodePixelHeight="200" UriSource="{x:Bind CurrentProduct.Post.Thumbnail.Url}"/>
+                </Image.Source>
+            </Image>
+        </Border>
         <TextBlock Name="ProductNameTextBlock" Text="{x:Bind CurrentProduct.Post.Name}"
                    Style="{StaticResource RankingTextStyle}"/>
     </StackPanel>
