@@ -30,7 +30,7 @@ namespace Podium.Controls
 
         private async void ViewProductButton_Click(object sender, RoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri(CurrentProduct.Post.Website));
+            await Launcher.LaunchUriAsync(new Uri(CurrentProduct.Post.Url));
         }
 
         private void Border_Tapped(object sender, TappedRoutedEventArgs e)

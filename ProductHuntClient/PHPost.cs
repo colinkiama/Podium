@@ -21,8 +21,8 @@ namespace ProductHuntClient
         public string Name { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
-        [JsonProperty("website")]
-        public string Website { get; set; }
+        [JsonProperty("url")]
+        public string Url { get; set; }
         [JsonProperty("thumbnail")]
         public ThumbnailObject Thumbnail { get; set; }
 

@@ -119,7 +119,7 @@ namespace ProductHuntClient
       node {
         name
         description
-        website
+        url
         thumbnail {
           url(width: 200, height: 200)
         }
