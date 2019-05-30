@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -36,12 +37,14 @@ namespace Podium
 
         private async void AuthorizeButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             bool hasAuthorized = await _client.AuthorizeAsync();
             Debug.WriteLine($"Authorization Successful: {hasAuthorized}");
         }
 
-        private async void TopPostsButton_Click(object sender, RoutedEventArgs e)
+
+
+        private async Task ShowTopPostsAsync()
         {
             var topPosts = await _client.GetTopPostsAsync();
             var topPostsList = (List<PHPost>)topPosts;
@@ -61,10 +64,27 @@ namespace Podium
             Product3.DataContext = products[2];
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            AuthorizeButton.Visibility = _client.TokenExists ? Visibility.Collapsed : Visibility.Visible;
+            bool isAuthorized = false;
+            if (!_client.TokenExists)
+            {
+                bool hasAuthorised = await _client.AuthorizeAsync();
+                if (!hasAuthorised)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                isAuthorized = true;
+            }
+
+            if (isAuthorized)
+            {
+                await ShowTopPostsAsync();
+            }
         }
     }
 }

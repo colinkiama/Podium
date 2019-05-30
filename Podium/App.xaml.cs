@@ -5,8 +5,12 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +26,9 @@ namespace Podium
     /// </summary>
     sealed partial class App : Application
     {
+
+        UISettings _uiSettings = new UISettings();
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,6 +37,36 @@ namespace Podium
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            _uiSettings.ColorValuesChanged += ColorValuesChanged;
+        }
+
+        private async void ColorValuesChanged(UISettings sender, object args)
+        {
+
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
+            () =>
+            {
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                var colorValue = sender.GetColorValue(UIColorType.Background);
+                bool isDarkMode = colorValue == Colors.Black;
+                Color colorToUse;
+                if (isDarkMode)
+                {
+                    colorToUse = Color.FromArgb(255, 23, 23, 23);
+
+                }
+                else
+                {
+                    colorToUse = Colors.White;
+
+                }
+                titleBar.BackgroundColor = colorToUse;
+                titleBar.BackgroundColor = colorToUse;
+                titleBar.ButtonBackgroundColor = colorToUse;
+                titleBar.InactiveBackgroundColor = colorToUse;
+                titleBar.ButtonInactiveBackgroundColor = colorToUse;
+            });
+
         }
 
         /// <summary>
@@ -39,6 +76,7 @@ namespace Podium
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            PrepareAppWindow();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -71,6 +109,18 @@ namespace Podium
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void PrepareAppWindow()
+        {
+            var appView = ApplicationView.GetForCurrentView();
+            var pageBackgroundThemeBrush = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
+            var colorToUse = pageBackgroundThemeBrush.Color;
+            var titleBar = appView.TitleBar;
+            titleBar.BackgroundColor = colorToUse;
+            titleBar.ButtonBackgroundColor = colorToUse;
+            titleBar.InactiveBackgroundColor = colorToUse;
+            titleBar.ButtonInactiveBackgroundColor = colorToUse;
         }
 
         /// <summary>
