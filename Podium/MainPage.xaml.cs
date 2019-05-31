@@ -68,31 +68,19 @@ namespace Podium
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            bool isAuthorized = false;
+
             if (!_client.TokenExists)
             {
-                bool hasAuthorised = await _client.AuthorizeAsync();
-                if (!hasAuthorised)
-                {
-                    return;
-                }
+                await _client.AuthorizeAsync();
             }
-            else
-            {
-                isAuthorized = true;
-            }
-
-            if (isAuthorized)
-            {
-                await ShowTopPostsAsync();
-            }
+            await ShowTopPostsAsync();
 
             NotificationsToggleButton.IsChecked = CheckIfNotificationsRegistered() ? true : false;
         }
 
         private bool CheckIfNotificationsRegistered()
         {
-            return BackgroundTaskRegistration.AllTasks.Values.Where(p => p.Name == "PodiumNotifications").Count() > 1;
+            return BackgroundTaskRegistration.AllTasks.Values.Where(p => p.Name == "PodiumNotifications").Count() > 0;
         }
 
         private void NotificationsToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -102,20 +90,25 @@ namespace Podium
 
         private void RegisterNotifications()
         {
+            if (!CheckIfNotificationsRegistered())
+            {
+                var builder = new BackgroundTaskBuilder();
 
-            var builder = new BackgroundTaskBuilder();
-
-            builder.Name = "PodiumNotifications";
-            builder.TaskEntryPoint = "PodiumNotifications.ToastNotifier";
-            builder.SetTrigger(new TimeTrigger(60, false));
-            builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
-            builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
-            BackgroundTaskRegistration bgTask = builder.Register();
+                builder.Name = "PodiumNotifications";
+                builder.TaskEntryPoint = "PodiumNotifications.ToastNotifier";
+                builder.SetTrigger(new TimeTrigger(60, false));
+                builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
+                builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
+                BackgroundTaskRegistration bgTask = builder.Register();
+            }
         }
 
         private void NotificationsToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            UnregisterNotifications();
+            if (CheckIfNotificationsRegistered())
+            {
+                UnregisterNotifications();
+            }
         }
 
         private void UnregisterNotifications()
