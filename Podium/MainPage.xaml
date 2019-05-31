@@ -6,9 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Podium.Controls"
+    xmlns:contract5Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-   
+    <Page.Resources>
+        <ResourceDictionary Source="ms-appx:///Dictionaries/ButtonStyles.xaml"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,7 +47,8 @@
                       Checked="NotificationsToggleButton_Checked"
                       Unchecked="NotificationsToggleButton_Unchecked"
                       Width="200"
-                      Height="40">
+                      Height="40"
+                      contract5Present:Style="{ThemeResource ToggleButtonRevealStyle}">
             <ToggleButton.Content>
                 <Grid>
                     <StackPanel Orientation="Horizontal"
