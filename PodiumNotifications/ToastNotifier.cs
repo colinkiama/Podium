@@ -29,7 +29,7 @@ namespace PodiumNotifications
         private void SendToastBasedOnPosts(List<PHPost> posts)
         {
             int rnd = new Random().Next(0, 99999);
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
+            DateTimeOffset currentTime = DateTimeOffset.Now;
 
             for (int i = posts.Count-1; i > -1; i--)
             {
