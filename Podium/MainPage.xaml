@@ -11,13 +11,21 @@
    
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-
+        <TextBlock Text="Product Hunt Top 3"
+                   FontWeight="Bold"
+                   FontSize="32"
+                   HorizontalAlignment="Left"
+                   Margin="32,40,0,0"
+                   TextWrapping="WrapWholeWords"/>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                    Grid.Row="1"
                     Grid.RowSpan="2">
             <controls:ProductControl x:Name="Product2" Width="140"
                                     Margin="0,100,20,0"/>

@@ -121,6 +121,8 @@ namespace Podium
             titleBar.ButtonBackgroundColor = colorToUse;
             titleBar.InactiveBackgroundColor = colorToUse;
             titleBar.ButtonInactiveBackgroundColor = colorToUse;
+
+            appView.SetPreferredMinSize(new Size(500, 500));
         }
 
         /// <summary>
