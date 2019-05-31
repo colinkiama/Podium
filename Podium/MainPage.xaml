@@ -30,13 +30,31 @@
         </ScrollViewer>
 
         <ToggleButton Grid.Row="1"
-                Content="Turn on notifications"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Margin="0,0,0,40"
                       Name="NotificationsToggleButton"
                       Checked="NotificationsToggleButton_Checked"
-                      Unchecked="NotificationsToggleButton_Unchecked"/>
+                      Unchecked="NotificationsToggleButton_Unchecked"
+                      Width="200"
+                      Height="40">
+            <ToggleButton.Content>
+                <Grid>
+                    <StackPanel Orientation="Horizontal"
+                                Name="TurnNotificationsOffStack">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7ED;" 
+                                  Margin="-12,0,12,0"/>
+                        <TextBlock Text="Turn off notifications" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Name="TurnNotificationsOnStack">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEA8F;" 
+                                  Margin="-12,0,12,0"/>
+                        <TextBlock Text="Turn on notifications" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Grid>
+            </ToggleButton.Content>
+        </ToggleButton>
     </Grid>
     
 </Page>

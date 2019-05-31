@@ -86,6 +86,14 @@ namespace Podium
         private void NotificationsToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             RegisterNotifications();
+            UpdateNotifcationButtonContent();
+        }
+
+        private void UpdateNotifcationButtonContent()
+        {
+            bool isNotifcationsButtonChecked = NotificationsToggleButton.IsChecked.Value;
+            TurnNotificationsOffStack.Visibility = isNotifcationsButtonChecked ? Visibility.Visible : Visibility.Collapsed;
+            TurnNotificationsOnStack.Visibility = isNotifcationsButtonChecked ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void RegisterNotifications()
@@ -105,17 +113,18 @@ namespace Podium
 
         private void NotificationsToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (CheckIfNotificationsRegistered())
-            {
-                UnregisterNotifications();
-            }
+            UnregisterNotifications();
+            UpdateNotifcationButtonContent();
         }
 
         private void UnregisterNotifications()
         {
-            foreach (var task in BackgroundTaskRegistration.AllTasks)
+            if (CheckIfNotificationsRegistered())
             {
-                task.Value.Unregister(true);
+                foreach (var task in BackgroundTaskRegistration.AllTasks)
+                {
+                    task.Value.Unregister(true);
+                }
             }
         }
     }
