@@ -37,15 +37,6 @@ namespace Podium
             this.InitializeComponent();
         }
 
-        private async void AuthorizeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            bool hasAuthorized = await _client.AuthorizeAsync();
-            Debug.WriteLine($"Authorization Successful: {hasAuthorized}");
-        }
-
-
-
         private async Task ShowTopPostsAsync()
         {
             var topPosts = await _client.GetTopPostsAsync();
