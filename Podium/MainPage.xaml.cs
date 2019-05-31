@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +36,17 @@ namespace Podium
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private async void NetworkInformation_NetworkStatusChanged(object sender)
+        {
+            ConnectionProfile internetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            if (internetConnectionProfile != null)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, async () => await GetDataFromClient());
+                
+                NetworkInformation.NetworkStatusChanged -= NetworkInformation_NetworkStatusChanged;
+            }
         }
 
         private async Task ShowTopPostsAsync()
@@ -64,14 +76,34 @@ namespace Podium
             NotificationsToggleButton.IsChecked = CheckIfNotificationsRegistered() ? true : false;
             UpdateNotifcationButtonContent();
 
+            try
+            {
+                await GetDataFromClient();
+                
+            }
+            catch
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = "Error connecting to Product Hunt",
+                    Content = "Please check your internet connection",
+                    CloseButtonText = "Ok"
+                };
+                _ = dialog.ShowAsync();
+                NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+            }
+        }
+
+        private async Task GetDataFromClient()
+        {
             if (!_client.TokenExists)
             {
                 await _client.AuthorizeAsync();
             }
             await ShowTopPostsAsync();
-
         }
 
+        
         private bool CheckIfNotificationsRegistered()
         {
             return BackgroundTaskRegistration.AllTasks.Values.Where(p => p.Name == "PodiumNotifications").Count() > 0;
