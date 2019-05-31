@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Services.Store.Engagement;
 
 namespace Podium
 {
@@ -77,6 +78,11 @@ namespace Podium
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             PrepareAppWindow();
+
+            // Register for Targeted notifications
+            StoreServicesEngagementManager engagementManager = StoreServicesEngagementManager.GetDefault();
+            _ = engagementManager.RegisterNotificationChannelAsync();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
