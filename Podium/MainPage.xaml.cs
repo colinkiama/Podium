@@ -1,4 +1,5 @@
-﻿using Podium.Model;
+﻿using Podium.Helpers;
+using Podium.Model;
 using ProductHuntClient;
 using System;
 using System.Collections.Generic;
@@ -69,13 +70,15 @@ namespace Podium
         {
             base.OnNavigatedTo(e);
 
+            NotificationsToggleButton.IsChecked = CheckIfNotificationsRegistered() ? true : false;
+            UpdateNotifcationButtonContent();
+
             if (!_client.TokenExists)
             {
                 await _client.AuthorizeAsync();
             }
             await ShowTopPostsAsync();
 
-            NotificationsToggleButton.IsChecked = CheckIfNotificationsRegistered() ? true : false;
         }
 
         private bool CheckIfNotificationsRegistered()
@@ -87,6 +90,7 @@ namespace Podium
         {
             RegisterNotifications();
             UpdateNotifcationButtonContent();
+            
         }
 
         private void UpdateNotifcationButtonContent()
@@ -108,6 +112,8 @@ namespace Podium
                 builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
                 builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
                 BackgroundTaskRegistration bgTask = builder.Register();
+
+                ToastHelper.SendNotifcationsEnabledToast();
             }
         }
 
@@ -125,6 +131,7 @@ namespace Podium
                 {
                     task.Value.Unregister(true);
                 }
+                ToastHelper.SendNotificationsDisabledToast();
             }
         }
     }

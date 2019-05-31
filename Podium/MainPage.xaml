@@ -16,18 +16,17 @@
         </Grid.RowDefinitions>
 
 
-
-        <ScrollViewer Grid.RowSpan="2">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-                <controls:ProductControl x:Name="Product2" Width="140"
-                                     Margin="0,100,40,0"/>
-                <controls:ProductControl x:Name="Product1" Width="140"
-                                     Margin="0,-80,0,0"/>
-                <controls:ProductControl x:Name="Product3" Width="140"
-                                      Margin="40,100,0,0"/>
-            </StackPanel>
-        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                    Grid.RowSpan="2">
+            <controls:ProductControl x:Name="Product2" Width="140"
+                                    Margin="0,100,20,0"/>
+            <controls:ProductControl x:Name="Product1" Width="140"
+                                    Margin="0,-80,0,0"/>
+            <controls:ProductControl x:Name="Product3" Width="140"
+                                    Margin="20,100,0,0"/>
+        </StackPanel>
+        
 
         <ToggleButton Grid.Row="1"
                 HorizontalAlignment="Center"

@@ -66,6 +66,8 @@
                   TextTrimming="CharacterEllipsis"
                    TextWrapping="WrapWholeWords"
                    TextAlignment="Center"
-                   Margin="0,4,0,0"/>
+                   Margin="0,4,0,0"
+                   FontWeight="SemiBold"
+                   ToolTipService.ToolTip="{x:Bind CurrentProduct.Post.Name}"/>
     </StackPanel>
 </UserControl>

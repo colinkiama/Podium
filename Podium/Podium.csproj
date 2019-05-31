@@ -123,6 +123,7 @@
       <DependentUpon>ProductControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RankingConverter.cs" />
+    <Compile Include="Helpers\ToastHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -165,6 +166,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>5.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
