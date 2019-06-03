@@ -32,10 +32,12 @@ namespace Podium
     {
         PHClient _client = new PHClient(Constants.ApiKey, Constants.ApiSecret);
         public List<Product> products { get; set; } = new List<Product>();
+        FullScreenHelper _fullScreenHelper;
 
         public MainPage()
         {
             this.InitializeComponent();
+            _fullScreenHelper = new FullScreenHelper(AppNameTextBlock);
         }
 
         private async void NetworkInformation_NetworkStatusChanged(object sender)

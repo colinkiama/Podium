@@ -130,6 +130,7 @@
       <DependentUpon>ProductControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RankingConverter.cs" />
+    <Compile Include="Helpers\FullScreenHelper.cs" />
     <Compile Include="Helpers\ToastHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

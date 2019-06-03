@@ -2,17 +2,30 @@
     x:Class="Podium.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Podium">
+    xmlns:local="using:Podium"
+    xmlns:contract5Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
+    xmlns:contract5NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,5)">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
-                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush"
+                    <contract5NotPresent:SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush"
                                      Color="#171717"/>
+                    <contract5Present:AcrylicBrush x:Key="ApplicationPageBackgroundThemeBrush"
+                                                   BackgroundSource="HostBackdrop"
+                                                   TintColor="Black"
+                                                   TintOpacity="0.8"
+                                                   FallbackColor="#171717"/>
+
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
-                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush"
+                    <contract5NotPresent:SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush"
                                      Color="White"/>
+                    <contract5Present:AcrylicBrush x:Key="ApplicationPageBackgroundThemeBrush"
+                                                   BackgroundSource="HostBackdrop"
+                                                   TintColor="White"
+                                                   TintOpacity="0.8"
+                                                   FallbackColor="White"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

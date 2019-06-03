@@ -38,37 +38,8 @@ namespace Podium
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            _uiSettings.ColorValuesChanged += ColorValuesChanged;
         }
 
-        private async void ColorValuesChanged(UISettings sender, object args)
-        {
-
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
-            () =>
-            {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                var colorValue = sender.GetColorValue(UIColorType.Background);
-                bool isDarkMode = colorValue == Colors.Black;
-                Color colorToUse;
-                if (isDarkMode)
-                {
-                    colorToUse = Color.FromArgb(255, 23, 23, 23);
-
-                }
-                else
-                {
-                    colorToUse = Colors.White;
-
-                }
-                titleBar.BackgroundColor = colorToUse;
-                titleBar.BackgroundColor = colorToUse;
-                titleBar.ButtonBackgroundColor = colorToUse;
-                titleBar.InactiveBackgroundColor = colorToUse;
-                titleBar.ButtonInactiveBackgroundColor = colorToUse;
-            });
-
-        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -120,14 +91,11 @@ namespace Podium
         private void PrepareAppWindow()
         {
             var appView = ApplicationView.GetForCurrentView();
-            var pageBackgroundThemeBrush = (SolidColorBrush)App.Current.Resources["ApplicationPageBackgroundThemeBrush"];
-            var colorToUse = pageBackgroundThemeBrush.Color;
-            var titleBar = appView.TitleBar;
-            titleBar.BackgroundColor = colorToUse;
-            titleBar.ButtonBackgroundColor = colorToUse;
-            titleBar.InactiveBackgroundColor = colorToUse;
-            titleBar.ButtonInactiveBackgroundColor = colorToUse;
-
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationViewTitleBar titleBar = appView.TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            
             appView.SetPreferredMinSize(new Size(500, 500));
         }
 
