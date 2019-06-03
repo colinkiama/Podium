@@ -9,7 +9,7 @@
   <Identity
     Name="64942ColinKiama.PodiumForProductHunt"
     Publisher="CN=D2DBA6D7-296F-484A-BABE-2B76C9C2AF78"
-    Version="1.0.2.0" />
+    Version="1.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="865b3214-9974-4d86-a583-aa18b4700fb6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
