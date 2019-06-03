@@ -131,7 +131,7 @@ namespace Podium
 
                 builder.Name = "PodiumNotifications";
                 builder.TaskEntryPoint = "PodiumNotifications.ToastNotifier";
-                builder.SetTrigger(new TimeTrigger(60, false));
+                builder.SetTrigger(new TimeTrigger(120, false));
                 builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
                 builder.AddCondition(new SystemCondition(SystemConditionType.InternetAvailable));
                 BackgroundTaskRegistration bgTask = builder.Register();
