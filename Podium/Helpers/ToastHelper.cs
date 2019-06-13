@@ -10,7 +10,7 @@ namespace Podium.Helpers
 {
     public sealed class ToastHelper
     {
-        const string enabledNotificationMessage = "Top 3 products will be shown here every hour! 🥳";
+        const string enabledNotificationMessage = "Top 3 products will be shown here every 2 hours! 🥳";
         const string disabledNotificationMessage = "Top 3 products will no longer be shown here. 😢";
         internal static void SendNotifcationsEnabledToast()
         {
